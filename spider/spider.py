@@ -1,7 +1,7 @@
-import requests
-import re
 import json
-from consts import const
+import re
+import requests
+from .utils import const
 
 req = requests.get(const.API_STAT_FORMAT.format(av=6536710))
 response = req.content.decode('utf')
@@ -20,13 +20,5 @@ print(data)
 
 print(req.content)
 
+print(__name__)
 
-# class VideoInfo(object):
-#     def __init__(self, av):
-#         self.av = av
-#
-#
-#
-#     @staticmethod
-#     def test_api():
-#         pass

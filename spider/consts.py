@@ -1,4 +1,4 @@
-from utils import const
+from spider.utils import const
 
 const.API_STAT_FORMAT = 'http://api.bilibili.com/archive_stat/stat?callback=jQuery17206695986036376824_1483704956932&aid={av}&type=jsonp&_=1483704957610'
 

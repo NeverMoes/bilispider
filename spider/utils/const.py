@@ -14,6 +14,5 @@ class const:
         self.__dict__[name] = value
 
 
-
 import sys
 sys.modules[__name__] = const()
