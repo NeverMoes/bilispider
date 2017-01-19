@@ -22,5 +22,4 @@ class InfoBuilder(object):
             parser.parse(self.videoinfo)
 
     def get_data(self):
-        return self.videoinfo.data
-
+            return self.videoinfo.data

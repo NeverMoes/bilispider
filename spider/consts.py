@@ -25,7 +25,7 @@ const = _const()
 
 const.BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 const.COOKIES_PATH = os.path.join(const.BASE_DIR, 'spider', 'bilicookies')
-
+const.ERRLOG_PATH = os.path.join(const.BASE_DIR, 'spider', 'errlog')
 
 ##################################################################################################
 
