@@ -39,25 +39,30 @@ class Requestor(object):
             parsers.append(parser)
         return parsers
 
-    def request_stat(self, avnum, retry=1):
+    def request_stat(self, avnum, retry=5):
         url = const.API_STAT_FORMAT.format(avnum=avnum)
 
-        if retry > 5:
-            raise Exception('request_stat failed'.format(avnum=avnum))
-        try:
-            req = self.session.get(url, timeout=10)
-        except Exception:
-            self.request_stat(avnum, retry=retry+1)
-        else:
-            return ParserStat(raw_data=req.text)
+        while retry:
+            try:
+                req = self.session.get(url, timeout=10)
+            except Exception:
+                retry -= 1
+                continue
+            else:
+                return ParserStat(raw_data=req.text)
 
-    def request_html(self, avnum, retry=1):
+        raise Exception('request_stat failed'.format(avnum=avnum))
+
+    def request_html(self, avnum, retry=5):
         url = const.HTML_PAGE_FORMAT.format(avnum=avnum)
-        if retry > 5:
-            raise Exception('request_html failed'.format(avnum=avnum))
-        try:
-            req = self.session.get(url, timeout=10)
-        except Exception:
-            self.request_html(avnum, retry=retry+1)
-        else:
-            return ParserHtml(raw_data=req.text)
+
+        while retry:
+            try:
+                req = self.session.get(url, timeout=10)
+            except Exception:
+                retry -= 1
+                continue
+            else:
+                return ParserHtml(raw_data=req.text)
+
+        raise Exception('request_html failed'.format(avnum=avnum))

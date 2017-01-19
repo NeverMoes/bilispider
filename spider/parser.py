@@ -33,14 +33,16 @@ class ParserHtml(Parser):
 
     def parse(self, item):
         parsed = etree.HTML(self.raw_data)
-        item.info['title'] = parsed.xpath('//title')[0].text.split('_')[0]
-        keywords = parsed.xpath('//meta[@name="keywords"]/@content')[0].split(',')
+
         try:
+            item.info['title'] = parsed.xpath('//title')[0].text.split('_')[0]
+            keywords = parsed.xpath('//meta[@name="keywords"]/@content')[0].split(',')
             item.info['author'] = keywords[6]
             item.info['category1'] = keywords[4]
             item.info['category2'] = keywords[5]
             item.info['tags'] = ','.join(keywords[7::])
         except Exception:
+            item.info['title'] = 'None'
             item.info['author'] = 'None'
             item.info['category1'] = 'None'
             item.info['category2'] = 'None'
