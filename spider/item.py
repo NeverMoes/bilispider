@@ -6,6 +6,10 @@ class VideoInfo(object):
     def __str__(self):
         return str(self.av) + ': ' + str(self.info)
 
+    def build(self, parsers):
+        for parser in parsers:
+            parser.parse(self)
+
     @property
     def data(self):
         if self.info['view'] == '--':
@@ -14,12 +18,5 @@ class VideoInfo(object):
         return self.info
 
 
-class InfoBuilder(object):
-    def start_build(self, avnum, parsers):
-        self.videoinfo = VideoInfo(avnum)
 
-        for parser in parsers:
-            parser.parse(self.videoinfo)
 
-    def get_data(self):
-            return self.videoinfo.data

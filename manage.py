@@ -1,4 +1,5 @@
-from spider import engine
+from spider.engine import Engine
 
+engine = Engine()
+engine.start(1)
 
-engine.main()

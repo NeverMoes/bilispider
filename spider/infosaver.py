@@ -1,6 +1,6 @@
 import sqlalchemy as sam
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from .local import dbconf
 import logging
 from .consts import const
@@ -42,7 +42,7 @@ class Video(BaseModel):
 class InfoSaver(object):
     def __init__(self):
         BaseModel.metadata.create_all(engine)
-        self.session = sessionmaker(bind=engine)()
+        self.dbsession = scoped_session(sessionmaker(bind=engine))
         self.init_logger()
 
     def init_logger(self):
@@ -60,8 +60,7 @@ class InfoSaver(object):
         self.logger.addHandler(console_handler)
 
     def add_data(self, data):
-        self.session.add(Video(**data))
-        self.logger.info(str(data))
-        self.session.commit()
+        self.dbsession().add(Video(**data))
+        self.dbsession().commit()
 
 

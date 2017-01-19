@@ -21,11 +21,11 @@ class ParserStat(Parser):
         jsonstr = self.re_pat.findall(self.raw_data)[0]
         jsondic = json.loads(jsonstr)['data']
         item.info['view'] = jsondic['view']
-        print(item.info['view'])
         item.info['danmaku'] = jsondic['danmaku']
         item.info['reply'] = jsondic['reply']
         item.info['fav'] = jsondic['favorite']
         item.info['share'] = jsondic['share']
+
 
 class ParserHtml(Parser):
     def __init__(self, raw_data):
