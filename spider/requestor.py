@@ -5,6 +5,7 @@ import http.cookiejar as cookielib
 import logging
 import sys
 
+
 class Requestor(object):
     def __init__(self):
         self.requestors = [self.request_stat, self.request_html]
@@ -38,28 +39,24 @@ class Requestor(object):
             parsers.append(parser)
         return parsers
 
-    def request_stat(self, avnum, retry=0):
+    def request_stat(self, avnum, retry=1):
         url = const.API_STAT_FORMAT.format(avnum=avnum)
 
-        if retry >= 10:
+        if retry > 5:
             raise Exception('request_stat failed'.format(avnum=avnum))
         try:
             req = self.session.get(url, timeout=10)
-        except requests.exceptions.ConnectTimeout:
-            self.request_stat(avnum, retry=retry+1)
         except Exception:
             self.request_stat(avnum, retry=retry+1)
         else:
             return ParserStat(raw_data=req.text)
 
-    def request_html(self, avnum, retry=0):
+    def request_html(self, avnum, retry=1):
         url = const.HTML_PAGE_FORMAT.format(avnum=avnum)
-        if retry >= 10:
+        if retry > 5:
             raise Exception('request_html failed'.format(avnum=avnum))
         try:
             req = self.session.get(url, timeout=10)
-        except requests.exceptions.ConnectTimeout:
-            self.request_html(avnum, retry=retry+1)
         except Exception:
             self.request_html(avnum, retry=retry+1)
         else:
